@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server public/ -o",
+    "start": "lite-server -c bs-config.js",
     "lint:js": "eslint public/script.js",
     "format": "prettier --write \"public/**/*.{html,css,js}\""
   },
@@ -15,7 +15,7 @@
   "devDependencies": {
     "eslint": "^9.39.1",
     "eslint-plugin-html": "^8.1.3",
-    "http-server": "^14.1.1",
+    "lite-server": "^2.6.1",
     "prettier": "^3.6.2"
   }
 }

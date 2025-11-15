@@ -1,10 +1,19 @@
-import arrr
-from pyscript import document
+from pyscript import PyWorker, document
 
+worker = PyWorker("worker.py", type="pyodide")
 
-def translate_english(event):
-    input_text = document.querySelector("#english")
-    english = input_text.value
-    output_div = document.querySelector("#output")
-    output_div.innerText = arrr.translate(english)
+worker.sync.greetings = lambda: print("Pyodide bootstrapped")
+
+print("before ready")
+await worker.ready
+print("after ready")
+
+async def run(event):
+    code = document.getElementById("solution").value
+    result = await worker.sync.evaluate(code)
+    print(result)
+    document.body.append(result)
+
+document.getElementById("run").addEventListener("click", run)
+# worker.terminate()
 
