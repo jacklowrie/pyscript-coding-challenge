@@ -1,5 +1,17 @@
 # worker.py
 from pyscript import sync
+import ast
+
+def check_for_multiplication(code):
+    try:
+        tree = ast.parse(code)
+    except SyntaxError:
+        return False  # syntax errors will be caught later
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mult):
+            return True
+    return False
 
 def evaluate(code):
     code = code.replace("\t", "    ")
@@ -12,6 +24,9 @@ def evaluate(code):
 
     if "multiply" not in namespace:
         return "💥 multiply function not defined"
+
+    if check_for_multiplication(code):
+        return "💥 Your solution cannot use the * operator!"
 
     tests = [
         (1,1),
