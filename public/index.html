@@ -11,23 +11,25 @@
     <script type="module" src="https://pyscript.net/releases/2025.11.1/core.js"></script>
 
     <!-- Ace Editor -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js" integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js" integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
-    <div id="solution" style="height: 200px; width: 600px;"></div>
-    <button id="run">Run</button>
-    <div id="output"></div>
+    <div class="container">
+    <div class="left-half">
+      <h3>Instructions</h3>
+      <p>Write a function <code>multiply(a, b)</code> that returns the product of two numbers. Do not use the multiplication (<code>*</code>) operator.</p>
+    </div>
+    <div class="right-half">
+      <div id="solution"></div>
+      <div class="controls">
+        <button id="run">Run</button>
+      </div>
+      <div id="output"></div>
+    </div>
     <script type="mpy" src="main.py"></script>
-    <script>
-      // Initialize Ace
-      const editor = ace.edit("solution");
-      editor.setTheme("ace/theme/tomorrow");
-      editor.session.setMode("ace/mode/python");
-
-      // Make it globally accessible for main.py
-      window.editor = editor;
-    </script>
+    </div>
   </body>
 </html>
 
