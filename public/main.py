@@ -1,4 +1,5 @@
-from pyscript import PyWorker, document
+# main.py
+from pyscript import PyWorker, document, window
 
 worker = PyWorker("worker.py", type="pyodide")
 
@@ -9,7 +10,7 @@ await worker.ready
 print("after ready")
 
 async def run(event):
-    code = document.getElementById("solution").value
+    code = window.editor.getValue()
     result = await worker.sync.evaluate(code)
     print(result)
     document.body.append(result)

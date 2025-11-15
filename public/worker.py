@@ -1,3 +1,4 @@
+# worker.py
 import sys
 from pyscript import sync
 
