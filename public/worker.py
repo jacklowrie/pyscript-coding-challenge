@@ -11,6 +11,9 @@ def check_for_multiplication(code):
     for node in ast.walk(tree):
         if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mult):
             return True
+        if isinstance(node, ast.AugAssign) and isinstance(node.op, ast.Mult):
+            return True
+
     return False
 
 def evaluate(code):
