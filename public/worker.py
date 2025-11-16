@@ -18,7 +18,6 @@ def check_for_multiplication(code):
 
 def evaluate(code):
     code = code.replace("\t", "    ")
-    print(code)
     namespace = {}
     try:
         exec(code, namespace)
