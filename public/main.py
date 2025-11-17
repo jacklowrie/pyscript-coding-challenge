@@ -15,7 +15,7 @@ editor.setOptions({
     "wrap": True
 })
 
-editor.setValue("def multiply(a, b):\n    # your code here ")
+editor.setValue("# your imports here\n\ndef multiply(a, b):\n    # your code here ")
 editor.resize()
 
 worker = PyWorker("worker.py", type="pyodide")
