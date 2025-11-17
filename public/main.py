@@ -16,6 +16,7 @@ editor.setOptions({
 })
 
 editor.setValue("# your imports here\n\ndef multiply(a, b):\n    # your code here ")
+editor.clearSelection()
 editor.resize()
 
 worker = PyWorker("worker.py", type="pyodide")
