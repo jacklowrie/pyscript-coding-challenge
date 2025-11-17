@@ -26,7 +26,8 @@ async def run(event):
     global worker
 
     code = editor.getValue()
-    document.getElementById("output").innerText = "⏳ Running..."
+    output = document.getElementById("output")
+    output.innerText = "⏳ Running..."
 
     # ---- TIMEOUT HANDLING ----
     timeout_ms = 1500  # 1.5 second limit
@@ -44,7 +45,7 @@ async def run(event):
         # Race the worker call vs. timeout
         result = await window.Promise.race([eval_promise, timeout_promise])
 
-        document.getElementById("output").innerText = f"{result}"
+        output.innerText = f"{result}"
 
     except Exception as e:
         if str(e) == "Error: timeout":
@@ -52,11 +53,11 @@ async def run(event):
             worker.terminate()
             worker = make_worker()   # start fresh
             await worker.ready
-            document.getElementById("output").innerText = (
+            output.innerText = (
                 "💥 Your code took too long (possible infinite loop). Worker reset."
             )
         else:
-            document.getElementById("output").innerText = f"💥 Error: {e}"
+            output.innerText = f"💥 Error: {e}"
 
 document.getElementById("run").addEventListener("click", run)
 

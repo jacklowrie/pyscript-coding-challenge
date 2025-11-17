@@ -30,16 +30,8 @@ def evaluate(code):
     if check_for_multiplication(code):
         return "💥 Your solution cannot use the * operator!"
 
-    tests = [
-        (1,1),
-        (1,2),
-        (2,1),
-        (2,3),
-        (0,3),
-        (3,0),
-        (-2,3),
-        (2,-3),
-    ]
+    tests = [(x, y) for x in range(-3,4) for y in range(-3,4)]
+
     results = []
     for test in tests:
         try:
@@ -52,15 +44,25 @@ def evaluate(code):
             results.append( f"error: {e}")
     
     formatted = ""
+    correct = 0
+    all_correct = False
     for test, result in zip(tests, results):
         if str(result).startswith("error:"):
-            formatted += f"💥 multiply{test} raised an exception: {result[7:]}\n"
-        elif result == test[0] * test[1]:
-            formatted += f"✅ multiply{test} = {result} (correct)\n"
+            if not all_correct:
+                formatted += f"💥 multiply{test} raised an exception: {result[7:]}\n"
+            all_correct = True
+        elif result != test[0] * test[1]:
+            if not all_correct:
+                formatted += f"❌ inputs {test}. Expected {test[0] * test[1]}, got {result})\n"
+            all_correct = True
         else:
-            formatted += f"❌ multiply{test} = {result} (incorrect, expected {test[0] * test[1]})\n"
+            correct += 1
+    output = f"{correct} / {len(tests)} correct\n" + formatted
 
-    return formatted
+    if correct == len(tests):
+        return "✅ All tests passed! Great job!"
+    else:
+        return f"{correct} / {len(tests)} correct\n" + formatted
 
 
 

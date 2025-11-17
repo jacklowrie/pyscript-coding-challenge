@@ -23,14 +23,14 @@
       integrity="sha512-yh2RE0wZCVZeysGiqTwDTO/dKelCbS9bP2L94UvOFtl/FKXcNAje3Y2oBg/ZMZ3LS1sicYk4dYVGtDex75fvvA==" 
       crossorigin="anonymous" 
       referrerpolicy="no-referrer" 
-    />
+    >
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
-        <h1 class="title">Python Coding Challenge</h1>
+    <h1 class="title">Python Coding Challenge</h1>
     <div class="section">
       <div class="columns">
         <div class="column">
@@ -41,18 +41,24 @@
           </p>
         </div>
         <div class="column">
-          <div class="box image is-5by4" id="solution"></div>
-          <div class="controls">
-            <button class="button is-primary" id="run">Run</button>
+          <div class="card">
+            <header class="card-header"><p class="card-header-title">Your Code</p></header>
+            <div class="mx-0" id="solution" style="aspect-ratio:4/3">
+            </div>
+            <div class="card-footer">
+                <button class="card-footer-item" id="run">Run</button>
+            </div>
           </div>
-          <div id="output"></div>
+          <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Output</p>
+            </header>
+            <div class="card-content" id="output"></div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="right-half">
-    </div>
     <script type="mpy" src="main.py"></script>
-    </div>
   </body>
 </html>
 
