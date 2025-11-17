@@ -3,30 +3,53 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PyWorker - mpy bootstrapping pyodide example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Python Coding Challenge</title>
 
     <!-- PyScript -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2025.11.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2025.11.1/core.js"></script>
 
     <!-- Ace Editor -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js" integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js"
+      integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" 
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer">
+    </script>
+
+    <!-- Bulma -->
+    <link rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" 
+      integrity="sha512-yh2RE0wZCVZeysGiqTwDTO/dKelCbS9bP2L94UvOFtl/FKXcNAje3Y2oBg/ZMZ3LS1sicYk4dYVGtDex75fvvA==" 
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer" 
+    />
+
+    <!-- Custom styles -->
     <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
-    <div class="container">
-    <div class="left-half">
-      <h3>Instructions</h3>
-      <p>Write a function <code>multiply(a, b)</code> that returns the product of two numbers. Do not use the multiplication (<code>*</code>) operator.</p>
+        <h1 class="title">Python Coding Challenge</h1>
+    <div class="section">
+      <div class="columns">
+        <div class="column">
+          <h3>Instructions</h3>
+          <p>
+            Write a function <code>multiply(a, b)</code> that returns the product of two numbers. 
+            Do not use the multiplication operators (<code>*, *=</code>).
+          </p>
+        </div>
+        <div class="column">
+          <div class="box image is-5by4" id="solution"></div>
+          <div class="controls">
+            <button class="button is-primary" id="run">Run</button>
+          </div>
+          <div id="output"></div>
+        </div>
+      </div>
     </div>
     <div class="right-half">
-      <div id="solution"></div>
-      <div class="controls">
-        <button id="run">Run</button>
-      </div>
-      <div id="output"></div>
     </div>
     <script type="mpy" src="main.py"></script>
     </div>
