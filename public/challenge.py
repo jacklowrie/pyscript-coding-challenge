@@ -2,7 +2,7 @@
 
 This file contains all the details for the challenge. In a real (prod)
 application, this can be stored in a database or CMS.
- """
+"""
 
 multiplication_challenge = {
     "function_name": "multiply",
@@ -18,7 +18,7 @@ multiplication_challenge = {
     ),
     "forbidden_operators": ["*"],
     "test_cases": [
-        (x, y) for x in range(-3, 4) for y in range(-3, 4)
+        (x, y) for x in range(-10, 11) for y in range(-10, 11)
     ],
-    "timeout_ms": 1500,
+    "timeout_ms": 3000,
 }
