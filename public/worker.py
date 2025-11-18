@@ -1,7 +1,8 @@
 # worker.py
 from pyscript import sync
+import json
 import ast
-challenge = sync.challenge
+
 op_symbol_map = {
     ast.Add: '+',
     ast.Sub: '-',
@@ -30,13 +31,13 @@ def symbol_lookup(key, by_symbol=True):
     else:
         return op_symbol_map[key]
 
-def check_rules(code):
+def check_rules(code, config):
     try:
         tree = ast.parse(code)
     except SyntaxError:
         return False  # syntax errors will be caught later
 
-    forbidden_ops = [symbol_lookup(s) for s in challenge("forbidden_operators")]
+    forbidden_ops = [symbol_lookup(s) for s in config["forbidden_operators"]]
     for node in ast.walk(tree):
         if isinstance(node, ast.BinOp) or isinstance(node, ast.AugAssign):
             for op in forbidden_ops:
@@ -44,7 +45,26 @@ def check_rules(code):
                     return True, symbol_lookup(type(node.op), False)
     return False, None
 
-def evaluate(code):
+def evaluate(code, config_json):
+    print("worker.py: Entering evaluate function.")
+    
+    # --- PARSE THE JSON STRING ---
+    config = None
+    try:
+        # Parse the JSON string back into a Python dictionary
+        config = json.loads(config_json) 
+        print("worker.py: Successfully parsed challenge data JSON.")
+    except json.JSONDecodeError as e:
+        print(f"worker.py: Failed to decode challenge data JSON: {e}")
+        return f"💥 Error: Could not parse challenge data - {e}"
+    except Exception as e:
+        print(f"worker.py: Unexpected error parsing challenge data: {e}")
+        return f"💥 Unexpected error with challenge data: {e}"
+
+
+
+
+
     code = code.replace("\t", "    ")
     namespace = {}
     try:
@@ -52,23 +72,23 @@ def evaluate(code):
     except Exception as e:
         return f"💥 Code failed to compile:\n{e}"
 
-    if challenge("function_name") not in namespace:
-        return f"💥 {challenge("function_name")} function not defined"
+    if config["function_name"] not in namespace:
+        return f"💥 {config["function_name"]} function not defined"
 
-    rule_violation, symbol = check_rules(code) 
+    rule_violation, symbol = check_rules(code, config) 
     if rule_violation:
         return f"💥 Your solution cannot use the {symbol} operator!"
 
-    tests = challenge("test_cases")
+    tests = config["test_cases"]
 
     results = []
     for test in tests:
         try:
             exec(code, namespace)
-            if challenge("function_name") not in namespace:
-                results.append(f"error: '{challenge("function_name")}' function not defined")
+            if config["function_name"] not in namespace:
+                results.append(f"error: '{config["function_name"]}' function not defined")
                 continue
-            results.append(namespace[challenge("function_name")](test[0], test[1]))
+            results.append(namespace[config["function_name"]](test[0], test[1]))
         except Exception as e:
             results.append( f"error: {e}")
     

@@ -1,6 +1,6 @@
 {
     "files": {
-        "https://jacklowrie.github.io/pyscript-coding-challenge/challenge.py": ""
+        "./challenge.py": ""
     }
 }
 

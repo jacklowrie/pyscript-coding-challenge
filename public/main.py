@@ -1,14 +1,11 @@
 # main.py
 from pyscript import PyWorker, document, window
 import js
+import json
 from challenge import multiplication_challenge as mc
-
-def challenge(attr):
-    return mc[attr]
 
 def make_worker():
     worker = PyWorker("worker.py", type="pyodide")
-    worker.sync.challenge = challenge
     return worker
 
 # ---- Initialize Ace Editor from Python ----
@@ -42,10 +39,11 @@ async def run(event):
     output.innerText = "⏳ Running..."
 
     # ---- TIMEOUT HANDLING ----
-    timeout_ms = 1500  # 1.5 second limit
+    timeout_ms = mc["timeout_ms"]
 
     # Create a promise that wraps worker.sync.evaluate
-    eval_promise = worker.sync.evaluate(code)
+    mc_json = json.dumps(mc)
+    eval_promise = worker.sync.evaluate(code, mc_json)
 
     # Create the timeout promise
     timeout_promise = window.Promise.new(
