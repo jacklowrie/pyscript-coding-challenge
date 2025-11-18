@@ -1,11 +1,23 @@
 # main.py
 from pyscript import PyWorker, document, window
 import js
+from challenge import multiplication_challenge as mc
+
+def challenge(attr):
+    return mc[attr]
+
+def make_worker():
+    worker = PyWorker("worker.py", type="pyodide")
+    worker.sync.challenge = challenge
+    return worker
 
 # ---- Initialize Ace Editor from Python ----
 # Create the editor
 editor = window.ace.edit(document.getElementById("solution"))
-editor.setTheme("ace/theme/tomorrow")
+if window.matchMedia('(prefers-color-scheme: dark)').matches:
+    editor.setTheme("ace/theme/monokai")
+else:
+    editor.setTheme("ace/theme/tomorrow")
 editor.session.setMode("ace/mode/python")
 editor.setOptions({
     "fontSize": "14px",
@@ -15,11 +27,11 @@ editor.setOptions({
     "wrap": True
 })
 
-editor.setValue("# your imports here\n\ndef multiply(a, b):\n    # your code here ")
+editor.setValue(mc["starter_code"])
 editor.clearSelection()
 editor.resize()
 
-worker = PyWorker("worker.py", type="pyodide")
+worker = make_worker()
 await worker.ready
 
 async def run(event):
@@ -60,4 +72,3 @@ async def run(event):
             output.innerText = f"💥 Error: {e}"
 
 document.getElementById("run").addEventListener("click", run)
-
