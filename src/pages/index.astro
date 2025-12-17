@@ -1,0 +1,102 @@
+---
+import "bulma/css/bulma.css";
+import { Icon } from "astro-icon/components";
+import { Content as Description } from "../content/challengeDescription.md";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Sample Pyscript Coding Challenge</title>
+
+    <!-- PyScript -->
+    <script
+      is:inline
+      type="module"
+      src="https://pyscript.net/releases/2025.11.1/core.js"></script>
+
+    <!-- Main application logic -->
+    <!-- @ts-ignore -->
+    <script is:inline defer type="mpy" src="main.py" config="pyscript.json"
+    ></script>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Pyscript Multiplication Challenge</h1>
+        <div class="columns is-desktop">
+          <div class="column">
+            <div class="content">
+              <Description />
+            </div>
+          </div>
+          <div class="column">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  <span class="icon">
+                    <Icon name="fa7-brands:python" />
+                  </span>
+                  Workspace
+                </p>
+              </header>
+              <div class="mx-0" id="editor" style="aspect-ratio:4/3"></div>
+              <div class="card-footer">
+                <button class="card-footer-item" id="run-btn">Run Tests</button>
+              </div>
+            </div>
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">Output</p>
+              </header>
+              <div class="card-content" id="output"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      import ace from "ace-builds";
+      import "ace-builds/src-noconflict/theme-monokai";
+      import "ace-builds/src-noconflict/theme-tomorrow";
+      import "ace-builds/src-noconflict/mode-python";
+
+      const editor = ace.edit("editor");
+      const starterCode = `# Implement multiplication, without the * operator.
+
+def multiply(a: int, b: int) -> int:
+	"""Returns the product of a and b."""
+    # Your code here...
+`;
+
+      // set theme based on system preference
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        editor.setTheme("ace/theme/monokai");
+      } else {
+        editor.setTheme("ace/theme/tomorrow");
+      }
+
+      // configure editor
+      editor.session.setMode("ace/mode/python");
+      editor.setOptions({
+        fontSize: "14px",
+        showPrintMargin: false,
+        tabSize: 4,
+        useSoftTabs: true,
+        wrap: true,
+      });
+
+      // initialize
+      editor.setValue(starterCode);
+      editor.clearSelection();
+      editor.resize();
+
+      // expose editor globally for pyscript to access
+      window.editor = editor;
+    </script>
+  </body>
+</html>

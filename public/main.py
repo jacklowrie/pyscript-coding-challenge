@@ -1,72 +1,56 @@
 # main.py
 from pyscript import PyWorker, document, window
-import js
 import json
-from challenge import multiplication_challenge as mc
+from pyscript.ffi import is_none
+from challenge import multiply_challenge_config
+
 
 def make_worker():
     worker = PyWorker("worker.py", type="pyodide")
     return worker
 
-# ---- Initialize Ace Editor from Python ----
-# Create the editor
-editor = window.ace.edit(document.getElementById("solution"))
-if window.matchMedia('(prefers-color-scheme: dark)').matches:
-    editor.setTheme("ace/theme/monokai")
-else:
-    editor.setTheme("ace/theme/tomorrow")
-editor.session.setMode("ace/mode/python")
-editor.setOptions({
-    "fontSize": "14px",
-    "showPrintMargin": False,
-    "tabSize": 4,
-    "useSoftTabs": True,
-    "wrap": True
-})
-
-editor.setValue(mc["starter_code"])
-editor.clearSelection()
-editor.resize()
-
-worker = make_worker()
-await worker.ready
 
 async def run(event):
-    global worker
+    # setup
+    worker = make_worker()
+    config = multiply_challenge_config
+    editor = window.editor
 
-    code = editor.getValue()
+    code = editor.getValue()  # get user implementation
+
+    # update output to indicate tests are running
     output = document.getElementById("output")
     output.innerText = "⏳ Running..."
 
-    # ---- TIMEOUT HANDLING ----
-    timeout_ms = mc["timeout_ms"]
-
     # Create a promise that wraps worker.sync.evaluate
-    mc_json = json.dumps(mc)
-    eval_promise = worker.sync.evaluate(code, mc_json)
+    await worker.ready
+    eval_promise = worker.sync.evaluate(code, json.dumps(config))
 
     # Create the timeout promise
     timeout_promise = window.Promise.new(
-        lambda resolve, reject:
-            window.setTimeout(lambda: reject(Exception("timeout")), timeout_ms)
+        lambda resolve, reject: window.setTimeout(
+            lambda: reject(Exception("timeout")), config["timeout_ms"]
+        )
     )
 
     try:
-        # Race the worker call vs. timeout
+        # Race the worker call against the timeout.
         result = await window.Promise.race([eval_promise, timeout_promise])
 
+        # display results and exit
         output.innerText = f"{result}"
+        worker.terminate()
 
     except Exception as e:
-        if str(e) == "Error: timeout":
+        if str(e) == "timeout":
             # ---- Worker hung. Kill it. ----
             worker.terminate()
-            worker = make_worker()   # start fresh
-            await worker.ready
             output.innerText = (
-                "💥 Your code took too long (possible infinite loop). Worker reset."
+                "💥 Your code took too long (possible infinite loop)."
             )
         else:
             output.innerText = f"💥 Error: {e}"
 
-document.getElementById("run").addEventListener("click", run)
+
+# ---- Attach event listener to run button ----
+document.getElementById("run-btn").addEventListener("click", run)
