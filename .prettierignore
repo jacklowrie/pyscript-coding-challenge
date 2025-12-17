@@ -1,0 +1,23 @@
+# Ignore artifacts
+node_modules/
+.dist/
+.DS_Store
+.git/
+
+# Ignore Python virtual env and caches
+.venv/
+__pycache__/
+.mypy_cache/
+.ruff_cache/
+
+# Editor and build outputs
+public/build/
+public/*.min.js
+public/*.py
+
+# Lockfiles handled by package manager
+pnpm-lock.yaml
+
+# Optional IDE files
+.vscode/
+.idea/

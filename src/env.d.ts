@@ -1,3 +1,3 @@
 interface Window {
-    getEditorContent: () => string;
+  getEditorContent: () => string;
 }

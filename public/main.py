@@ -1,16 +1,37 @@
-# main.py
+"""main.py: The main entry point pyscript.
+
+This file registers the event listener for the "Run" button and
+handles running the user's code in a worker thread with a timeout.
+"""
+
 import json
 
 from challenge import multiply_challenge_config
 from pyscript import PyWorker, document, window
 
 
-def make_worker():
+def make_worker() -> PyWorker:
+    """Makes a new worker thread.
+
+    The worker uses pyodide to run Python code in a separate thread, allowing
+    for a near-complete python environment.
+
+    Returns:
+        PyWorker: The worker thread.
+    """
     worker = PyWorker("worker.py", type="pyodide")
     return worker
 
 
-async def run(event):
+async def run(_: object) -> None:
+    """Runs the user's code in a worker thread with a timeout.
+
+    This function is attached to the "Run" button and is called when the button
+    is clicked.
+
+    Args:
+        _: object: The event object (not used).
+    """
     # setup
     worker = make_worker()
     config = multiply_challenge_config
