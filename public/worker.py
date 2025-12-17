@@ -4,32 +4,34 @@ import json
 import ast
 
 op_symbol_map = {
-    ast.Add: '+',
-    ast.Sub: '-',
-    ast.Mult: '*',
-    ast.Div: '/',
-    ast.FloorDiv: '//',
-    ast.Mod: '%',
-    ast.Pow: '**',
-    ast.BitAnd: '&',
-    ast.BitOr: '|',
-    ast.BitXor: '^',
-    ast.LShift: '<<',
-    ast.RShift: '>>',
-    ast.Eq: '==',
-    ast.NotEq: '!=',
-    ast.Lt: '<',
-    ast.LtE: '<=',
-    ast.Gt: '>',
-    ast.GtE: '>=',
+    ast.Add: "+",
+    ast.Sub: "-",
+    ast.Mult: "*",
+    ast.Div: "/",
+    ast.FloorDiv: "//",
+    ast.Mod: "%",
+    ast.Pow: "**",
+    ast.BitAnd: "&",
+    ast.BitOr: "|",
+    ast.BitXor: "^",
+    ast.LShift: "<<",
+    ast.RShift: ">>",
+    ast.Eq: "==",
+    ast.NotEq: "!=",
+    ast.Lt: "<",
+    ast.LtE: "<=",
+    ast.Gt: ">",
+    ast.GtE: ">=",
 }
 symbol_op_map = {value: key for key, value in op_symbol_map.items()}
+
 
 def symbol_lookup(key, by_symbol=True):
     if by_symbol:
         return symbol_op_map[key]
     else:
         return op_symbol_map[key]
+
 
 def check_rules(code, config):
     try:
@@ -45,25 +47,17 @@ def check_rules(code, config):
                     return True, symbol_lookup(type(node.op), False)
     return False, None
 
+
 def evaluate(code, config_json):
-    print("worker.py: Entering evaluate function.")
-    
     # --- PARSE THE JSON STRING ---
     config = None
     try:
         # Parse the JSON string back into a Python dictionary
-        config = json.loads(config_json) 
-        print("worker.py: Successfully parsed challenge data JSON.")
+        config = json.loads(config_json)
     except json.JSONDecodeError as e:
-        print(f"worker.py: Failed to decode challenge data JSON: {e}")
         return f"💥 Error: Could not parse challenge data - {e}"
     except Exception as e:
-        print(f"worker.py: Unexpected error parsing challenge data: {e}")
         return f"💥 Unexpected error with challenge data: {e}"
-
-
-
-
 
     code = code.replace("\t", "    ")
     namespace = {}
@@ -73,9 +67,9 @@ def evaluate(code, config_json):
         return f"💥 Code failed to compile:\n{e}"
 
     if config["function_name"] not in namespace:
-        return f"💥 {config["function_name"]} function not defined"
+        return f"💥 {config['function_name']} function not defined"
 
-    rule_violation, symbol = check_rules(code, config) 
+    rule_violation, symbol = check_rules(code, config)
     if rule_violation:
         return f"💥 Your solution cannot use the {symbol} operator!"
 
@@ -86,19 +80,23 @@ def evaluate(code, config_json):
         try:
             exec(code, namespace)
             if config["function_name"] not in namespace:
-                results.append(f"error: '{config["function_name"]}' function not defined")
+                results.append(
+                    f"error: '{config['function_name']}' function not defined"
+                )
                 continue
             results.append(namespace[config["function_name"]](test[0], test[1]))
         except Exception as e:
-            results.append( f"error: {e}")
-    
+            results.append(f"error: {e}")
+
     formatted = ""
     correct = 0
     all_correct = False
     for test, result in zip(tests, results):
         if str(result).startswith("error:"):
             if not all_correct:
-                formatted += f"💥 input {test} raised an exception: {result[7:]}\n"
+                formatted += (
+                    f"💥 input {test} raised an exception: {result[7:]}\n"
+                )
             all_correct = True
         elif result != test[0] * test[1]:
             if not all_correct:
@@ -114,10 +112,5 @@ def evaluate(code, config_json):
         return f"{correct} / {len(tests)} correct\n" + formatted
 
 
-
-
-
-
 # Expose any methods meant to be used from main.
 sync.evaluate = evaluate
-
