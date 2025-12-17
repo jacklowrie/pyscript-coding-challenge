@@ -95,8 +95,8 @@ def multiply(a: int, b: int) -> int:
       editor.clearSelection();
       editor.resize();
 
-      // expose editor globally for pyscript to access
-      window.editor = editor;
+      // define getter for code
+      window.getEditorContent = () => editor.getValue();
     </script>
   </body>
 </html>

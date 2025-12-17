@@ -1,7 +1,8 @@
 # worker.py
-from pyscript import sync
-import json
 import ast
+import json
+
+from pyscript import sync
 
 op_symbol_map = {
     ast.Add: "+",

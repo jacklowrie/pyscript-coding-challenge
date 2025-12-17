@@ -1,3 +1,3 @@
 interface Window {
-    editor: AceAjax.Editor;
+    getEditorContent: () => string;
 }

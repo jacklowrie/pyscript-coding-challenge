@@ -1,8 +1,8 @@
 # main.py
-from pyscript import PyWorker, document, window
 import json
-from pyscript.ffi import is_none
+
 from challenge import multiply_challenge_config
+from pyscript import PyWorker, document, window
 
 
 def make_worker():
@@ -14,9 +14,8 @@ async def run(event):
     # setup
     worker = make_worker()
     config = multiply_challenge_config
-    editor = window.editor
 
-    code = editor.getValue()  # get user implementation
+    code = window.getEditorContent()  # get user implementation
 
     # update output to indicate tests are running
     output = document.getElementById("output")
