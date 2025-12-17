@@ -18,19 +18,23 @@ repos:
       - id: trailing-whitespace
 
   - repo: local
+    hooks: []
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.14.9
     hooks:
       - id: ruff
-        name: Ruff Linter
-        entry: uv
-        language: system
-        types: [python]
-        args: ["run", "ruff", "check", "--fix"]
-        always_run: true
+        args: ["--fix"]
 
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.19.1
+    hooks:
       - id: mypy
-        name: MyPy Type-Checker
-        entry: uv
-        language: system
-        types: [python]
-        args: ["run", "mypy"]
-        always_run: true
+        args: ["public"]
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        files: '\\.(js|ts|json|css|scss|md|astro)$'
+        args: ["--write", "--"]
