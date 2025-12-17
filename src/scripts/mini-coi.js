@@ -1,3 +1,4 @@
+// NOTE: for future, try to find a way to minify this during build step. it's manually minified for now.
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
 /*! mini-coi - Andrea Giammarchi and contributors, licensed under MIT */
 (({ document: d, navigator: { serviceWorker: s } }) => {

@@ -1,4 +1,5 @@
 ---
+import { base } from "astro:config/client";
 import "bulma/css/bulma.css";
 import { Icon } from "astro-icon/components";
 import { Content as Description } from "../content/challengeDescription.md";
@@ -7,7 +8,7 @@ import { Content as Description } from "../content/challengeDescription.md";
 <!doctype html>
 <html lang="en">
   <head>
-    <script src=`${import.meta.env.BASE_URL}/mini-coi.js`></script>
+    <script is:inline src={`${base}/mini-coi.min.js`}></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -21,8 +22,12 @@ import { Content as Description } from "../content/challengeDescription.md";
 
     <!-- Main application logic -->
     <!-- @ts-ignore -->
-    <script is:inline defer type="mpy" src="main.py" config="pyscript.json"
-    ></script>
+    <script
+      is:inline
+      defer
+      type="mpy"
+      src={`${base}/main.py`}
+      config={`${base}/pyscript.json`}></script>
   </head>
   <body>
     <section class="section">
