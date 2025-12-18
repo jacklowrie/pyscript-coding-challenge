@@ -7,5 +7,6 @@ import icon from "astro-icon";
 export default defineConfig({
   site: "https://jacklowrie.github.io",
   base: "/pyscript-coding-challenge",
+  srcDir: "srcastro",
   integrations: [icon()],
 });

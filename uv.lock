@@ -179,6 +179,9 @@ wheels = [
 name = "pyscript-coding-challenge"
 version = "0.1.0"
 source = { virtual = "." }
+dependencies = [
+    { name = "python-minifier" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -188,12 +191,22 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "python-minifier", specifier = ">=3.1.1" }]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "mypy", specifier = ">=1.19.1" },
     { name = "pre-commit", specifier = ">=4.5.0" },
     { name = "ruff", specifier = ">=0.14.9" },
+]
+
+[[package]]
+name = "python-minifier"
+version = "3.1.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/88/4660e3dfa6fce0ccc7d1deb6e9e767089aa7910628617805ff3f9356370f/python_minifier-3.1.1.tar.gz", hash = "sha256:60a7b5873cd3bd332421f9910b99d271ace923c0ee0c8c40fd026f3008d2d1b9", size = 81563, upload-time = "2025-12-11T21:34:17.746Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0c/8d/9033077c9ca0839dcec9ed02796c431e274257071b03ba647857f1c3e023/python_minifier-3.1.1-py3-none-any.whl", hash = "sha256:eef85fd57012613e671cb040fb8ffdfdd7bd7e12998569557ba213eea8be0b6e", size = 61797, upload-time = "2025-12-11T21:34:16.4Z" },
 ]
 
 [[package]]

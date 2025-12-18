@@ -1,5 +1,7 @@
 # build output
 dist/
+public/*.py
+
 # generated types
 .astro/
 
@@ -23,7 +25,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-.venv
-__pycache__
-.mypy_cache
-.ipynb_checkpoints
+.venv/
+__pycache__/
+.mypy_cache/
+.ipynb_checkpoints/
+.vscode/
+.ruffle_cache/

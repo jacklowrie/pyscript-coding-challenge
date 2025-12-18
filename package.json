@@ -4,12 +4,13 @@
   "version": "0.0.1",
   "packageManager": "pnpm@10.26.0",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "pnpm run minify-pyscript && astro dev",
+    "build": "pnpm run minify-pyscript && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write",
-    "format:check": "prettier --check"
+    "format:check": "prettier --check",
+    "minify-pyscript": "mkdir -p public && cp -R srcpy/*.py public/ && uv run pyminify public/ --in-place --remove-literal-statements"
   },
   "dependencies": {
     "@iconify-json/fa7-brands": "^1.2.1",

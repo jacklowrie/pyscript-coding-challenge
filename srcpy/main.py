@@ -7,6 +7,7 @@ handles running the user's code in a worker thread with a timeout.
 import json
 
 from challenge import multiply_challenge_config
+
 from pyscript import PyWorker, document, window
 
 

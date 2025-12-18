@@ -4,14 +4,26 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = ["python-minifier>=3.1.1"]
 
 [dependency-groups]
 dev = ["mypy>=1.19.1", "pre-commit>=4.5.0", "ruff>=0.14.9"]
 
 [tool.ruff]
 line-length = 80
-
+exclude = [
+    ".astro",
+    ".git",
+    ".github",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".venv",
+    ".vscode",
+    "dist",
+    "node_modules",
+    "public",
+    "srcastro",
+]
 [tool.ruff.lint]
 select = [
     "E",   # pycodestyle errors
@@ -30,13 +42,15 @@ convention = "google"
 
 [tool.mypy]
 python_version = "3.12"
-files = ["public"]
+files = ["srcpy"]
 mypy_path = "."
 exclude = [
     '(^|.*/)__pycache__/', # matches __pycache__ at any depth
     '(^|.*/).ruff_cache/',
     '(^|.*/).mypy_cache/',
     '(^|.*/)dist/',
+    '(^|.*/)public/',
+    '(^|.*/).venv/',
 ]
 
 ignore_missing_imports = true
