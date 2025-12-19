@@ -10,6 +10,8 @@ from challenge import multiply_challenge_config
 
 from pyscript import PyWorker, document, window
 
+base = document.currentScript.getAttribute("src").rsplit("/", 1)[0]
+
 
 def make_worker() -> PyWorker:
     """Makes a new worker thread.
@@ -20,7 +22,7 @@ def make_worker() -> PyWorker:
     Returns:
         PyWorker: The worker thread.
     """
-    worker = PyWorker("worker.py", type="pyodide")
+    worker = PyWorker(f"{base}/worker.py", type="pyodide")
     return worker
 
 

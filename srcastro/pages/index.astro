@@ -8,7 +8,9 @@ import { Content as Description } from "../content/challengeDescription.md";
 <!doctype html>
 <html lang="en">
   <head>
-    <script is:inline src={`${base}/mini-coi.min.js`}></script>
+    {// @ts-ignore scope attribute. needed for mini-coi, not in our control.}
+    <script is:inline src={`${base}/mini-coi.min.js`} scope={`${base}/`}
+    ></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
