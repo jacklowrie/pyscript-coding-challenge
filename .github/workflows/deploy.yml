@@ -20,6 +20,22 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v6
+      - name: "Set up Python"
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: minify and move python scripts
+        run: |
+          mkdir -p public
+          cp -R srcpy/*.py public/
+          uv run --frozen --no-dev pyminify public/ --in-place --remove-literal-statements
+
       - name: Install, build, and upload your site
         uses: withastro/action@v5
         with:
