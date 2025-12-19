@@ -6,7 +6,7 @@ Define a function `multiply(a: int, b: int) -> int` that returns the product of 
 
 1. You may not install or use any dependencies.
 2. You may not use the `*` or `*=` operators.
-3. The challenge will run your implementation using python 3.12.
+3. The challenge will run your implementation using python 3.13.2.
 
 ### Examples:
 
