@@ -24,9 +24,8 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
+          version: 0.9.17
           enable-cache: true
-      - name: Install uv python
-        run: uv python install
 
       - name: Install, build, and upload your site
         uses: withastro/action@v5
