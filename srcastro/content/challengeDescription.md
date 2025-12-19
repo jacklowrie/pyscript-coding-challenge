@@ -15,3 +15,5 @@ Define a function `multiply(a: int, b: int) -> int` that returns the product of 
 - `multiply(3, 0)` should return `0`
 
 When you run your code, it will run in your browser!
+
+You can view the challenge source code on [GitHub](https://github.com/jacklowrie/pyscript-coding-challenge).
