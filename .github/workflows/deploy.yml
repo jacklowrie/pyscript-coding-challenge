@@ -30,12 +30,6 @@ jobs:
         with:
           enable-cache: true
 
-      - name: minify and move python scripts
-        run: |
-          mkdir -p public
-          cp -R srcpy/*.py public/
-          uv run --frozen --no-dev pyminify public/ --in-place --remove-literal-statements
-
       - name: Install, build, and upload your site
         uses: withastro/action@v5
         with:
